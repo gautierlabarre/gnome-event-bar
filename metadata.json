@@ -1,0 +1,10 @@
+{
+  "description": "Show your next calendar event in the status bar",
+  "gettext-domain": "event-bar@gautierlabarre.github.com",
+  "name": "Event Bar",
+  "settings-schema": "org.gnome.shell.extensions.event-bar",
+  "shell-version": ["45", "46", "47"],
+  "url": "https://github.com/gautierlabarre/gnome-event-bar",
+  "uuid": "event-bar@gautierlabarre.github.com",
+  "version": 1
+}
