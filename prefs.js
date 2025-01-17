@@ -16,23 +16,10 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
     // Create a preferences page
     const page = new Adw.PreferencesPage();
 
-    // Create a first group
-    const group = new Adw.PreferencesGroup();
+    const group = new Adw.PreferencesGroup({ title: _("General") });
     page.add(group);
 
-    // Create a new preferences row
     const row = new Adw.ActionRow({ title: _("Panel to show indicator in") });
-    const rowIcon = this.addBooleanSwitchRow(
-      settings,
-      {
-        title: _("Show event icon before the event"),
-        subtitle: 'show/hide the "event icon" before the event',
-      },
-      "show-event-icon"
-    );
-    group.add(row);
-    group.add(rowIcon);
-
     const dropdown = new Gtk.DropDown({
       model: Gtk.StringList.new([_("Left"), "Center", "Right"]),
       valign: Gtk.Align.CENTER,
@@ -46,18 +33,13 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
 
     row.add_suffix(dropdown);
     row.activatable_widget = dropdown;
-
-    this.addSlider(
-      group,
-      "Length of the event name before it is truncated",
-      10,
-      100,
-      0,
-      settings
+    const rowIcon = this.addBooleanSwitchRow(
+      settings,
+      {
+        title: _("Show event icon before the event"),
+      },
+      "show-event-icon"
     );
-
-    const groupOfEventsParameters = new Adw.PreferencesGroup();
-
     const rowMeetingNameDisplay = this.addBooleanSwitchRow(
       settings,
       {
@@ -66,6 +48,24 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
       },
       "show-event-name"
     );
+
+    const slider = this.addSlider(
+      "Length of the event name displayed",
+      10,
+      100,
+      0,
+      settings
+    );
+
+    group.add(row);
+    group.add(rowIcon);
+    group.add(rowMeetingNameDisplay);
+    group.add(slider);
+
+    const groupOfEventsParameters = new Adw.PreferencesGroup({
+      title: _("Next events"),
+    });
+
     const rowEventDuration = this.addBooleanSwitchRow(
       settings,
       {
@@ -78,7 +78,7 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
       settings,
       {
         title: _("Display the time before the event"),
-        subtitle: 'Will add/remove the "in 1 h" in the event name',
+        subtitle: 'Will add/remove the "In 1 h" in the event name',
       },
       "show-time-before-event"
     );
@@ -86,25 +86,29 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
       settings,
       {
         title: _("Display the time of the event"),
-        subtitle: 'Will add/remove the "at 15:00" in the event name',
+        subtitle: 'Will add/remove the "(15:00)" in the event name',
       },
       "show-time-of-event"
     );
+
+    groupOfEventsParameters.add(rowEventDuration);
+    groupOfEventsParameters.add(rowEventTimeBeforeEvent);
+    groupOfEventsParameters.add(rowEventTime);
+    page.add(groupOfEventsParameters);
+
+    const groupOfCurrentEventsParameters = new Adw.PreferencesGroup({
+      title: _("Current events"),
+    });
     const rowDisplayNextEventWhenAlreadyInMeeting = this.addBooleanSwitchRow(
       settings,
       {
         title: _("Display the next event during an event"),
-        subtitle: "When you are in a meeting, show the next event as well",
+        subtitle: "When in a meeting, show the next event as well",
       },
       "show-next-event-during-meeting"
     );
-    groupOfEventsParameters.add(rowMeetingNameDisplay);
-    groupOfEventsParameters.add(rowEventDuration);
-    groupOfEventsParameters.add(rowEventTimeBeforeEvent);
-    groupOfEventsParameters.add(rowEventTime);
-    groupOfEventsParameters.add(rowDisplayNextEventWhenAlreadyInMeeting);
-
-    page.add(groupOfEventsParameters);
+    groupOfCurrentEventsParameters.add(rowDisplayNextEventWhenAlreadyInMeeting);
+    page.add(groupOfCurrentEventsParameters);
 
     // Add our page to the window
     window.add(page);
@@ -135,7 +139,7 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
     return row;
   }
 
-  addSlider(group, labelText, lower, upper, decimalDigits, settings) {
+  addSlider(labelText, lower, upper, decimalDigits, settings) {
     const scale = new Gtk.Scale({
       digits: decimalDigits,
       adjustment: new Gtk.Adjustment({ lower: lower, upper: upper }),
@@ -151,11 +155,12 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
         settings.set_int("event-length", newValue);
       }
     });
-    scale.set_size_request(200, 15);
+    scale.set_size_request(150, 15);
 
     const row = Adw.ActionRow.new();
     row.set_title(labelText);
     row.add_suffix(scale);
-    group.add(row);
+
+    return row;
   }
 }

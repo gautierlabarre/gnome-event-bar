@@ -42,7 +42,7 @@ export function getTimeOfEventAsText(eventDate) {
 }
 
 /**
- * Returns the time to the event in format HH hr MM min
+ * Returns the time to the event in format HHh MMm
  * If minutes are 0, it will not display them
  *
  * @param {*} eventDate
@@ -56,11 +56,11 @@ export function getTimeToEventAsText(eventDate) {
   const hrDiff = Math.floor(diffInMins / 60);
   const minDiff = diffInMins % 60;
 
-  return hrDiff > 0 ? `${hrDiff} hr ${minDiff} min` : `${minDiff} min`;
+  return hrDiff > 0 ? `${hrDiff}h ${minDiff}m` : `${minDiff}m`;
 }
 
 /**
- * returns the duration of an event in format HH hr MM min
+ * returns the duration of an event in format HHh MMm
  *
  * @param {*} beginDate
  * @param {*} endDate
@@ -74,6 +74,6 @@ export function getEventDuration(beginDate, endDate) {
   const minDiff = diffInMins % 60;
 
   return hrDiff > 0
-    ? `${hrDiff} hr${minDiff > 0 ? `${minDiff} min` : ""} `
-    : `${minDiff} min`;
+    ? `${hrDiff}h ${minDiff > 0 ? `${minDiff}m` : ""} `
+    : `${minDiff}m`;
 }

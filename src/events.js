@@ -114,19 +114,16 @@ function displayNextEvent(event, settings) {
 
   const summary = showEventName ? trim(event.summary, length) : "Meeting";
 
-  const displayShowTimeOfEvent = `${showTimeOfEvent ? `At ${timeText} ` : ""}`;
+  const displayShowTimeOfEvent = `${showTimeOfEvent ? `(${timeText}) ` : ""}`;
   const displayShowTimeBeforeEvent = `${
-    showTimeBeforeEvent ? `In ${diffText}` : ""
+    showTimeBeforeEvent ? `In ${diffText} ` : ""
   }`;
-  const displayDuration = `${showDuration ? `for ${duration}` : ""}`;
+  const displayDuration = `${showDuration ? `for ${duration} ` : ""}`;
   const displayColons = `${
     showTimeOfEvent || showTimeBeforeEvent || showDuration ? ": " : ""
   }`;
-  const displayComma = `${
-    (showTimeOfEvent || showTimeBeforeEvent) && displayDuration ? ", " : ""
-  }`;
 
-  return `${displayShowTimeOfEvent}${displayShowTimeBeforeEvent}${displayComma}${displayDuration}${displayColons}${summary}`;
+  return `${displayShowTimeBeforeEvent}${displayShowTimeOfEvent}${displayDuration}${displayColons}${summary}`;
 }
 
 /**
