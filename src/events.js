@@ -137,7 +137,11 @@ function displayCurrentEventAndNextEvent(currentEvent, nextEvent, settings) {
   const endsInText = getTimeToEventAsText(currentEvent.end);
   const timeText = getTimeOfEventAsText(nextEvent.date);
   const showEventName = settings.get_boolean("show-event-name");
-  const summary = showEventName ? trim(nextEvent.summary) : _("Meeting");
+  const length = settings.get_int("event-length");
+
+  const summary = showEventName
+    ? trim(nextEvent.summary, length)
+    : _("Meeting");
   return _(`Ends in ${endsInText}. Next: ${summary} at ${timeText}`);
 }
 
@@ -150,7 +154,9 @@ function displayCurrentEventAndNextEvent(currentEvent, nextEvent, settings) {
 function displayCurrentEvent(event, settings) {
   const endsInText = getTimeToEventAsText(event.end);
   const showEventName = settings.get_boolean("show-event-name");
-  const summary = showEventName ? trim(event.summary) : _("Meeting");
+  const length = settings.get_int("event-length");
+
+  const summary = showEventName ? trim(event.summary, length) : _("Meeting");
 
   return _(`Ends in ${endsInText}: ${summary}`);
 }
