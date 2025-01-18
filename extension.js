@@ -142,6 +142,12 @@ export default class NextUpExtension extends Extension {
       this._indicator.setText(text);
       return;
     }
+
+    if (eventStatus.currentEvent !== null && eventStatus.nextEvent !== null) {
+      this._indicator.showCurrentEventIcon({ showIcon: shouldShowEventIcon });
+      this._indicator.setText(text);
+      return;
+    }
   }
 
   disable() {
