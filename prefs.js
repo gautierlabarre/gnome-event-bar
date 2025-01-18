@@ -21,7 +21,7 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
 
     const row = new Adw.ActionRow({ title: _("Panel to show indicator in") });
     const dropdown = new Gtk.DropDown({
-      model: Gtk.StringList.new([_("Left"), "Center", "Right"]),
+      model: Gtk.StringList.new([_("Left"), _("Center"), _("Right")]),
       valign: Gtk.Align.CENTER,
     });
     settings.bind(
@@ -44,13 +44,15 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
       settings,
       {
         title: _("Display event name"),
-        subtitle: `If disabled will show "Meeting" instead of the event name`,
+        subtitle: _(
+          `If disabled will show "Meeting" instead of the event name`
+        ),
       },
       "show-event-name"
     );
 
     const slider = this.addSlider(
-      "Length of the event name displayed",
+      _("Length of the event name displayed"),
       10,
       100,
       0,
@@ -70,7 +72,7 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
       settings,
       {
         title: _("Display event duration"),
-        subtitle: 'Will add/remove the "for 30 min" in the event name',
+        subtitle: _('Will add/remove the "for 30 min" in the event name'),
       },
       "show-duration"
     );
@@ -78,7 +80,7 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
       settings,
       {
         title: _("Display the time before the event"),
-        subtitle: 'Will add/remove the "In 1 h" in the event name',
+        subtitle: _('Will add/remove the "In 1 h" in the event name'),
       },
       "show-time-before-event"
     );
@@ -86,7 +88,7 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
       settings,
       {
         title: _("Display the time of the event"),
-        subtitle: 'Will add/remove the "(15:00)" in the event name',
+        subtitle: _('Will add/remove the "(15:00)" in the event name'),
       },
       "show-time-of-event"
     );
@@ -103,7 +105,7 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
       settings,
       {
         title: _("Display the next event during an event"),
-        subtitle: "When in a meeting, show the next event as well",
+        subtitle: _("When in a meeting, show the next event as well"),
       },
       "show-next-event-during-meeting"
     );

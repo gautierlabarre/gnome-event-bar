@@ -112,7 +112,7 @@ function displayNextEvent(event, settings) {
   const showTimeBeforeEvent = settings.get_boolean("show-time-before-event");
   const length = settings.get_int("event-length");
 
-  const summary = showEventName ? trim(event.summary, length) : "Meeting";
+  const summary = showEventName ? trim(event.summary, length) : _("Meeting");
 
   const displayShowTimeOfEvent = `${showTimeOfEvent ? `(${timeText}) ` : ""}`;
   const displayShowTimeBeforeEvent = `${
@@ -137,8 +137,8 @@ function displayCurrentEventAndNextEvent(currentEvent, nextEvent, settings) {
   const endsInText = getTimeToEventAsText(currentEvent.end);
   const timeText = getTimeOfEventAsText(nextEvent.date);
   const showEventName = settings.get_boolean("show-event-name");
-  const summary = showEventName ? trim(nextEvent.summary) : "Meeting";
-  return `Ends in ${endsInText}. Next: ${summary} at ${timeText}`;
+  const summary = showEventName ? trim(nextEvent.summary) : _("Meeting");
+  return _(`Ends in ${endsInText}. Next: ${summary} at ${timeText}`);
 }
 
 /**
@@ -150,7 +150,7 @@ function displayCurrentEventAndNextEvent(currentEvent, nextEvent, settings) {
 function displayCurrentEvent(event, settings) {
   const endsInText = getTimeToEventAsText(event.end);
   const showEventName = settings.get_boolean("show-event-name");
-  const summary = showEventName ? trim(event.summary) : "Meeting";
+  const summary = showEventName ? trim(event.summary) : _("Meeting");
 
-  return `Ends in ${endsInText}: ${summary}`;
+  return _(`Ends in ${endsInText}: ${summary}`);
 }
