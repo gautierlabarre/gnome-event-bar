@@ -65,14 +65,14 @@ export default class Indicator extends PanelMenu.Button {
     this.text.set_text(text);
   }
 
-  showNextEventIcon() {
+  showNextEventIcon({ showIcon }) {
     this.icon.set_icon_name("org.gnome.Calendar.Devel-symbolic");
-    this.icon.visible = true;
+    this.icon.visible = showIcon ? true : false;
   }
 
-  showCurrentEventIcon() {
+  showCurrentEventIcon({ showIcon }) {
     this.icon.set_icon_name("clock-alt-symbolic");
-    this.icon.visible = true;
+    this.icon.visible = showIcon ? true : false;
   }
 
   hideIcon() {

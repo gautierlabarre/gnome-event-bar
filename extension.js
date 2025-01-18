@@ -114,41 +114,33 @@ export default class NextUpExtension extends Extension {
   // Clean up this code, the conditions are incredibly hard to follow
   refreshIndicator() {
     const todaysEvents = getTodaysEvents(this._indicator._calendarSource);
+    const eventStatus = getNextEvents(todaysEvents);
+    const text = eventToDisplay(eventStatus, this._settings);
+    const shouldShowEventIcon = this._settings.get_boolean("show-event-icon");
+    const noEventsToday = todaysEvents.length === 0;
+    const noCurrentNorNextEvent =
+      eventStatus.currentEvent === null && eventStatus.nextEvent === null;
 
-    if (todaysEvents.length === 0) {
+    if (noCurrentNorNextEvent && noEventsToday) {
       this.iterations++;
     }
 
-    const eventStatus = getNextEvents(todaysEvents);
-    const text = eventToDisplay(eventStatus, this._settings);
-
-    if (
-      eventStatus.currentEvent === null &&
-      eventStatus.nextEvent === null &&
-      this.iterations >= 8
-    ) {
+    if ((this.iterations >= 8 || !noEventsToday) && noCurrentNorNextEvent) {
       this._indicator.showNoEventIcon();
-    } else {
-      const shouldShowAlarm = this._settings.get_boolean("show-event-icon");
-      if (shouldShowAlarm && todaysEvents.length > 0) {
-        if (eventStatus.currentEvent === null) {
-          this._indicator.showNextEventIcon();
-        } else {
-          this._indicator.showCurrentEventIcon();
-        }
-      } else {
-        if (todaysEvents.length > 0) {
-          this._indicator.hideIcon();
-        }
-      }
+      this._indicator.setText("");
+      return;
     }
 
-    if (
-      this.iterations >= 8 ||
-      eventStatus.currentEvent !== null ||
-      eventStatus.nextEvent !== null
-    ) {
+    if (eventStatus.currentEvent === null && eventStatus.nextEvent !== null) {
+      this._indicator.showNextEventIcon({ showIcon: shouldShowEventIcon });
       this._indicator.setText(text);
+      return;
+    }
+
+    if (eventStatus.currentEvent !== null && eventStatus.nextEvent === null) {
+      this._indicator.showCurrentEventIcon({ showIcon: shouldShowEventIcon });
+      this._indicator.setText(text);
+      return;
     }
   }
 
