@@ -4,6 +4,7 @@ import * as Calendar from "resource:///org/gnome/shell/ui/calendar.js";
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import * as PanelMenu from "resource:///org/gnome/shell/ui/panelMenu.js";
 import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
+import * as Config from "resource:///org/gnome/shell/misc/config.js";
 import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
 
 export default class Indicator extends PanelMenu.Button {
@@ -22,15 +23,21 @@ export default class Indicator extends PanelMenu.Button {
   }
 
   _loadGUI() {
-    this._menuLayout = new St.BoxLayout({
+    const boxLayoutConfig = {
       vertical: false,
       clip_to_allocation: true,
       x_align: Clutter.ActorAlign.START,
       y_align: Clutter.ActorAlign.CENTER,
       reactive: true,
       x_expand: true,
-      pack_start: false,
-    });
+    };
+
+    const shellVersion = parseFloat(Config.PACKAGE_VERSION);
+    if (shellVersion < 45) {
+      boxLayoutConfig.pack_start = false;
+    }
+
+    this._menuLayout = new St.BoxLayout(boxLayoutConfig);
 
     this._calendarIcon = new St.Icon({
       icon_name: "content-loading-symbolic",
