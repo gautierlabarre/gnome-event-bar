@@ -111,47 +111,56 @@ export default class NextUpExtension extends Extension {
       .remove_child(this._indicator.container);
   }
 
-  // Clean up this code, the conditions are incredibly hard to follow
   refreshIndicator() {
     const todaysEvents = getTodaysEvents(this._indicator._calendarSource);
     const eventStatus = getNextEvents(todaysEvents);
     const text = eventToDisplay(eventStatus, this._settings);
     const shouldShowEventIcon = this._settings.get_boolean("show-event-icon");
-    const noEventsToday = todaysEvents.length === 0;
-    const noCurrentNorNextEvent =
-      eventStatus.currentEvent === null && eventStatus.nextEvent === null;
 
-    if (noCurrentNorNextEvent && noEventsToday) {
-      this.iterations++;
-    }
+    // Simplified state detection
+    const hasEventsToday = todaysEvents.length > 0;
+    const hasCurrentEvent = eventStatus.currentEvent !== null;
+    const hasNextEvent = eventStatus.nextEvent !== null;
 
-    if ((this.iterations >= 8 || !noEventsToday) && noCurrentNorNextEvent) {
-      this._indicator.showNoEventIcon();
-      this._indicator.setText("");
+    // Handle case where no events are available
+    if (!hasCurrentEvent && !hasNextEvent) {
+      this._handleNoEvents(hasEventsToday);
       return;
     }
 
-    if (eventStatus.currentEvent === null && eventStatus.nextEvent !== null) {
-      this._indicator.showNextEventIcon({ showIcon: shouldShowEventIcon });
-      this._indicator.setText(text);
-      return;
-    }
-
-    if (eventStatus.currentEvent !== null && eventStatus.nextEvent === null) {
-      this._indicator.showCurrentEventIcon({ showIcon: shouldShowEventIcon });
-      this._indicator.setText(text);
-      return;
-    }
-
-    if (eventStatus.currentEvent !== null && eventStatus.nextEvent !== null) {
-      this._indicator.showCurrentEventIcon({ showIcon: shouldShowEventIcon });
-      this._indicator.setText(text);
-      return;
+    // Handle cases where we have events
+    if (hasCurrentEvent) {
+      this._showCurrentEvent(text, shouldShowEventIcon);
+    } else if (hasNextEvent) {
+      this._showNextEvent(text, shouldShowEventIcon);
     }
   }
 
+  _handleNoEvents(hasEventsToday) {
+    if (!hasEventsToday) {
+      this.iterations++;
+    }
+
+    // Show "no events" indicator after enough iterations or when there are events but none current/next
+    const shouldShowNoEvents = this.iterations >= 8 || hasEventsToday;
+    if (shouldShowNoEvents) {
+      this._indicator.showNoEventIcon();
+      this._indicator.setText("");
+    }
+  }
+
+  _showCurrentEvent(text, shouldShowEventIcon) {
+    this._indicator.showCurrentEventIcon({ showIcon: shouldShowEventIcon });
+    this._indicator.setText(text);
+  }
+
+  _showNextEvent(text, shouldShowEventIcon) {
+    this._indicator.showNextEventIcon({ showIcon: shouldShowEventIcon });
+    this._indicator.setText(text);
+  }
+
   disable() {
-    Main.panel._centerBox.remove_child(this._indicator.container);
+    this.unloadIndicator();
 
     this._settings.disconnect(this._settingChangedSignal);
     this._settings = null;
