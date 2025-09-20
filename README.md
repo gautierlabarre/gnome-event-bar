@@ -39,10 +39,9 @@ To prepare the extension for publication:
    ```
 
 3. **Test the package:**
-   ````bash
+   ```bash
    gnome-extensions install event-bar@gautierlabarre.github.com.zip
-   ```gnome 45 and above.
-   ````
+   ```
 
 ![screenshot1](screenshots/screenshot.png)
 ![screenshot2](screenshots/screenshot2.png)
