@@ -71,8 +71,11 @@ First, synchronize your calendar with your gnome calendar. Then, you can install
 
 Event Bar supports internationalization and is currently available in:
 
-- **🇺🇸 English** (default)
-- **🇫🇷 French** (Français)
+- **🇺🇸 English**
+- **🇫🇷 French**
+- **🇪🇸 Spanish**
+- **🇮🇹 Italian**
+- **🇩🇪 German**
 
 ### How it works
 
@@ -127,7 +130,7 @@ Want to add your language? Here's how:
 ## Next feature (help is welcome)
 
 - Another wording for the event (to gain space)
-- More translation languages (German, Spanish, Italian, etc.)
+- More translation languages (Portuguese, Dutch, Russian, etc.)
 - ?? Feel free to add an issue
 
 ## How to develop ?
