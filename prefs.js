@@ -1,6 +1,7 @@
 "use strict";
 
 import Adw from "gi://Adw";
+import Gdk from "gi://Gdk";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
 
@@ -13,11 +14,27 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
   fillPreferencesWindow(window) {
     const settings = this.getSettings();
 
-    // Create a preferences page
-    const page = new Adw.PreferencesPage();
+    // Create Global page
+    const globalPage = new Adw.PreferencesPage({
+      title: _("Global"),
+      icon_name: "preferences-system-symbolic",
+    });
 
-    const group = new Adw.PreferencesGroup({ title: _("General") });
-    page.add(group);
+    this.createGlobalPage(globalPage, settings);
+    window.add(globalPage);
+
+    // Create Styling page
+    const stylingPage = new Adw.PreferencesPage({
+      title: _("Styling"),
+      icon_name: "applications-graphics-symbolic",
+    });
+
+    this.createStylingPage(stylingPage, settings);
+    window.add(stylingPage);
+  }
+
+  createGlobalPage(page, settings) {
+    const generalGroup = new Adw.PreferencesGroup({ title: _("General") });
 
     const row = new Adw.ActionRow({ title: _("Panel to show indicator in") });
     const dropdown = new Gtk.DropDown({
@@ -33,13 +50,6 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
 
     row.add_suffix(dropdown);
     row.activatable_widget = dropdown;
-    const rowIcon = this.addBooleanSwitchRow(
-      settings,
-      {
-        title: _("Show event icon before the event"),
-      },
-      "show-event-icon"
-    );
     const rowMeetingNameDisplay = this.addBooleanSwitchRow(
       settings,
       {
@@ -59,10 +69,10 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
       settings
     );
 
-    group.add(row);
-    group.add(rowIcon);
-    group.add(rowMeetingNameDisplay);
-    group.add(slider);
+    generalGroup.add(row);
+    generalGroup.add(rowMeetingNameDisplay);
+    generalGroup.add(slider);
+    page.add(generalGroup);
 
     const groupOfEventsParameters = new Adw.PreferencesGroup({
       title: _("Next events"),
@@ -111,9 +121,84 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
     );
     groupOfCurrentEventsParameters.add(rowDisplayNextEventWhenAlreadyInMeeting);
     page.add(groupOfCurrentEventsParameters);
+  }
 
-    // Add our page to the window
-    window.add(page);
+  createStylingPage(page, settings) {
+    // Icon Group
+    const iconGroup = new Adw.PreferencesGroup({
+      title: _("Icon"),
+      description: _("Configure event icon display"),
+    });
+
+    const showIconRow = this.addBooleanSwitchRow(
+      settings,
+      {
+        title: _("Show event icon before the event"),
+      },
+      "show-event-icon"
+    );
+    iconGroup.add(showIconRow);
+    page.add(iconGroup);
+
+    // Color Bar Group
+    const colorBarGroup = new Adw.PreferencesGroup({
+      title: _("Color Bar"),
+      description: _("Display a colored bar before events"),
+    });
+
+    // Show color bar switch
+    const showColorBarRow = this.addBooleanSwitchRow(
+      settings,
+      {
+        title: _("Show Color Bar"),
+        subtitle: _("Display a 3px colored bar before the event text"),
+      },
+      "show-color-bar"
+    );
+    colorBarGroup.add(showColorBarRow);
+
+    // Color bar color picker
+    const colorBarColorRow = this.addColorRow(
+      settings,
+      {
+        title: _("Bar Color"),
+        subtitle: _("Choose the color of the bar"),
+      },
+      "color-bar-color"
+    );
+    colorBarGroup.add(colorBarColorRow);
+
+    page.add(colorBarGroup);
+
+    // Text Styling Group
+    const textStylingGroup = new Adw.PreferencesGroup({
+      title: _("Text Styling"),
+      description: _("Customize the appearance of event text"),
+    });
+
+    // Font size slider
+    const fontSizeRow = this.addFontSizeSlider(
+      settings,
+      {
+        title: _("Font Size"),
+        subtitle: _("Adjust the font size of event text"),
+      },
+      "font-size"
+    );
+    textStylingGroup.add(fontSizeRow);
+
+    // Text color picker
+    const textColorRow = this.addTextColorRow(
+      settings,
+      {
+        title: _("Text Color"),
+        subtitle: _("Choose the color of the event text"),
+      },
+      "text-color"
+    );
+    textStylingGroup.add(textColorRow);
+
+    page.add(textStylingGroup);
   }
 
   /**
@@ -162,6 +247,163 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
     const row = Adw.ActionRow.new();
     row.set_title(labelText);
     row.add_suffix(scale);
+
+    return row;
+  }
+
+  addColorRow(settings, texts, variable) {
+    const row = new Adw.ActionRow(texts);
+
+    const colorButton = new Gtk.ColorButton({
+      valign: Gtk.Align.CENTER,
+      use_alpha: false,
+    });
+
+    // Set initial color
+    const currentColor = settings.get_string(variable);
+    const rgba = new Gdk.RGBA();
+    rgba.parse(currentColor);
+    colorButton.set_rgba(rgba);
+
+    // Connect color change
+    colorButton.connect("color-set", () => {
+      const newColor = colorButton.get_rgba().to_string();
+      settings.set_string(variable, newColor);
+    });
+
+    // Reset button
+    const resetButton = new Gtk.Button({
+      icon_name: "edit-undo-symbolic",
+      valign: Gtk.Align.CENTER,
+      tooltip_text: _("Reset to default"),
+      css_classes: ["flat"],
+    });
+
+    resetButton.connect("clicked", () => {
+      const defaultColor = "#5f6368"; // Default gray color
+      settings.set_string(variable, defaultColor);
+      const rgba = new Gdk.RGBA();
+      rgba.parse(defaultColor);
+      colorButton.set_rgba(rgba);
+    });
+
+    const buttonBox = new Gtk.Box({
+      spacing: 6,
+      orientation: Gtk.Orientation.HORIZONTAL,
+    });
+    buttonBox.append(colorButton);
+    buttonBox.append(resetButton);
+
+    row.add_suffix(buttonBox);
+    row.activatable_widget = colorButton;
+
+    return row;
+  }
+
+  addFontSizeSlider(settings, texts, variable) {
+    const row = new Adw.ActionRow(texts);
+
+    const scale = new Gtk.Scale({
+      digits: 0,
+      adjustment: new Gtk.Adjustment({
+        lower: 8,
+        upper: 24,
+        step_increment: 1,
+        page_increment: 2,
+      }),
+      value_pos: Gtk.PositionType.RIGHT,
+      hexpand: true,
+      halign: Gtk.Align.END,
+    });
+
+    scale.set_draw_value(true);
+    scale.set_value(settings.get_int(variable));
+
+    scale.connect("value-changed", (sw) => {
+      let newValue = sw.get_value();
+      if (newValue != settings.get_int(variable)) {
+        settings.set_int(variable, newValue);
+      }
+    });
+
+    scale.set_size_request(200, 15);
+
+    // Reset button
+    const resetButton = new Gtk.Button({
+      icon_name: "edit-undo-symbolic",
+      valign: Gtk.Align.CENTER,
+      tooltip_text: _("Reset to system default"),
+      css_classes: ["flat"],
+    });
+
+    resetButton.connect("clicked", () => {
+      settings.set_int(variable, 12); // 12pt as reasonable default
+      scale.set_value(12);
+    });
+
+    const controlBox = new Gtk.Box({
+      spacing: 6,
+      orientation: Gtk.Orientation.HORIZONTAL,
+    });
+    controlBox.append(scale);
+    controlBox.append(resetButton);
+
+    row.add_suffix(controlBox);
+
+    return row;
+  }
+
+  addTextColorRow(settings, texts, variable) {
+    const row = new Adw.ActionRow(texts);
+
+    const colorButton = new Gtk.ColorButton({
+      valign: Gtk.Align.CENTER,
+      use_alpha: false,
+    });
+
+    // Set initial color or default
+    const currentColor = settings.get_string(variable);
+    let rgba = new Gdk.RGBA();
+
+    if (currentColor && currentColor !== "") {
+      rgba.parse(currentColor);
+    } else {
+      // Use a neutral color as placeholder when using system default
+      rgba.parse("#ffffff");
+    }
+    colorButton.set_rgba(rgba);
+
+    // Connect color change
+    colorButton.connect("color-set", () => {
+      const newColor = colorButton.get_rgba().to_string();
+      settings.set_string(variable, newColor);
+    });
+
+    // Reset button
+    const resetButton = new Gtk.Button({
+      icon_name: "edit-undo-symbolic",
+      valign: Gtk.Align.CENTER,
+      tooltip_text: _("Reset to system default"),
+      css_classes: ["flat"],
+    });
+
+    resetButton.connect("clicked", () => {
+      settings.set_string(variable, ""); // Empty = system default
+      // Reset to neutral color visually
+      const defaultRgba = new Gdk.RGBA();
+      defaultRgba.parse("#ffffff");
+      colorButton.set_rgba(defaultRgba);
+    });
+
+    const buttonBox = new Gtk.Box({
+      spacing: 6,
+      orientation: Gtk.Orientation.HORIZONTAL,
+    });
+    buttonBox.append(colorButton);
+    buttonBox.append(resetButton);
+
+    row.add_suffix(buttonBox);
+    row.activatable_widget = colorButton;
 
     return row;
   }
