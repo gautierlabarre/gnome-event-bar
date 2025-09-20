@@ -1,3 +1,4 @@
+import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
 import {
   notFullDayEvent,
   getEventDuration,
@@ -116,9 +117,11 @@ function displayNextEvent(event, settings) {
 
   const displayShowTimeOfEvent = `${showTimeOfEvent ? `(${timeText}) ` : ""}`;
   const displayShowTimeBeforeEvent = `${
-    showTimeBeforeEvent ? `In ${diffText} ` : ""
+    showTimeBeforeEvent ? _("In %s ").format(diffText) : ""
   }`;
-  const displayDuration = `${showDuration ? `for ${duration} ` : ""}`;
+  const displayDuration = `${
+    showDuration ? _("for %s ").format(duration) : ""
+  }`;
   const displayColons = `${
     showTimeOfEvent || showTimeBeforeEvent || showDuration ? ": " : ""
   }`;
@@ -142,7 +145,7 @@ function displayCurrentEventAndNextEvent(currentEvent, nextEvent, settings) {
   const summary = showEventName
     ? trim(nextEvent.summary, length)
     : _("Meeting");
-  return _(`Ends in ${endsInText}. Next: ${summary} at ${timeText}`);
+  return _("Ends in %s. Next: %s at %s").format(endsInText, summary, timeText);
 }
 
 /**
@@ -158,5 +161,5 @@ function displayCurrentEvent(event, settings) {
 
   const summary = showEventName ? trim(event.summary, length) : _("Meeting");
 
-  return _(`Ends in ${endsInText}: ${summary}`);
+  return _("Ends in %s: %s").format(endsInText, summary);
 }

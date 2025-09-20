@@ -1,3 +1,5 @@
+import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
+
 /**
  * Will trim the text to the specified length
  * Is used on the event name
@@ -56,9 +58,14 @@ export function getTimeToEventAsText(eventDate) {
   const hrDiff = Math.floor(diffInMins / 60);
   const minDiff = diffInMins % 60;
 
-  return hrDiff > 0 ? `${hrDiff}h ${minDiff}m` : `${minDiff}m`;
+  if (hrDiff > 0) {
+    return minDiff > 0
+      ? _("%dh %dm").format(hrDiff, minDiff)
+      : _("%dh").format(hrDiff);
+  } else {
+    return _("%dm").format(minDiff);
+  }
 }
-
 /**
  * returns the duration of an event in format HHh MMm
  *
@@ -73,7 +80,11 @@ export function getEventDuration(beginDate, endDate) {
   const hrDiff = Math.floor(diffInMins / 60);
   const minDiff = diffInMins % 60;
 
-  return hrDiff > 0
-    ? `${hrDiff}h ${minDiff > 0 ? `${minDiff}m` : ""} `
-    : `${minDiff}m`;
+  if (hrDiff > 0) {
+    return minDiff > 0
+      ? _("%dh %dm").format(hrDiff, minDiff)
+      : _("%dh").format(hrDiff);
+  } else {
+    return _("%dm").format(minDiff);
+  }
 }
