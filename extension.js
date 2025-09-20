@@ -36,12 +36,13 @@ const IndicatorInstance = GObject.registerClass(Indicator);
 
 export default class NextUpExtension extends Extension {
   enable() {
+    this._settings = this.getSettings();
     this._indicator = new IndicatorInstance({
       openPrefsCallback: this.openPreferences.bind(this),
+      settings: this._settings,
     });
     this.iterations = 1;
 
-    this._settings = this.getSettings();
     this._settingChangedSignal = this._settings.connect(
       "changed::which-panel",
       () => {
@@ -58,6 +59,8 @@ export default class NextUpExtension extends Extension {
       "changed::show-event-icon",
       "changed::show-event-name",
       "changed::show-next-event-during-meeting",
+      "changed::show-color-bar",
+      "changed::color-bar-color",
     ].forEach((setting) => {
       this._settingChangedSignal = this._settings.connect(setting, () => {
         this.refreshIndicator();
@@ -145,18 +148,18 @@ export default class NextUpExtension extends Extension {
     const shouldShowNoEvents = this.iterations >= 8 || hasEventsToday;
     if (shouldShowNoEvents) {
       this._indicator.showNoEventIcon();
-      this._indicator.setText("");
+      this._indicator.setText("", false); // No events, so hasEvents = false
     }
   }
 
   _showCurrentEvent(text, shouldShowEventIcon) {
     this._indicator.showCurrentEventIcon({ showIcon: shouldShowEventIcon });
-    this._indicator.setText(text);
+    this._indicator.setText(text, true); // Current event visible, so hasEvents = true
   }
 
   _showNextEvent(text, shouldShowEventIcon) {
     this._indicator.showNextEventIcon({ showIcon: shouldShowEventIcon });
-    this._indicator.setText(text);
+    this._indicator.setText(text, true); // Next event visible, so hasEvents = true
   }
 
   disable() {

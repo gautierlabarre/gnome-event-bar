@@ -26,6 +26,27 @@
     <key name="show-next-event-during-meeting" type="b">
       <default>true</default>
     </key>
+    <key name="show-color-bar" type="b">
+      <default>false</default>
+      <summary>Show colored bar before event</summary>
+      <description>Display a 3px colored bar before the event text</description>
+    </key>
+    <key name="color-bar-color" type="s">
+      <default>'#5f6368'</default>
+      <summary>Color of the event bar</summary>
+      <description>Color used for the colored bar before events</description>
+    </key>
+    <key name="font-size" type="i">
+      <default>0</default>
+      <range min="0" max="24"/>
+      <summary>Font size for event text</summary>
+      <description>Font size in points for event text (0 = use system default)</description>
+    </key>
+    <key name="text-color" type="s">
+      <default>''</default>
+      <summary>Color of the event text</summary>
+      <description>Color used for the event text (empty = use system default)</description>
+    </key>
 
   </schema>
 </schemalist>

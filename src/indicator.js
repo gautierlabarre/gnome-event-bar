@@ -11,6 +11,7 @@ export default class Indicator extends PanelMenu.Button {
   constructor(props) {
     super();
     this._openPrefsCallback = props.openPrefsCallback;
+    this._settings = props.settings;
   }
 
   _init() {
@@ -20,6 +21,7 @@ export default class Indicator extends PanelMenu.Button {
 
     this._loadGUI();
     this._initialiseMenu();
+    this._connectSettings();
   }
 
   _loadGUI() {
@@ -45,6 +47,18 @@ export default class Indicator extends PanelMenu.Button {
     });
     this.icon = this._calendarIcon;
 
+    // Initialize event state
+    this._hasEvents = false;
+
+    // Add colored bar between icon and text
+    this._colorBar = new St.Widget({
+      style_class: "event-color-bar",
+      style: "background-color: transparent;",
+      visible: false,
+      y_align: Clutter.ActorAlign.FILL,
+      y_expand: true,
+    });
+
     this.text = new St.Label({
       text: _("Loading"),
       y_expand: true,
@@ -53,6 +67,7 @@ export default class Indicator extends PanelMenu.Button {
     });
 
     this._menuLayout.add_child(this.icon);
+    this._menuLayout.add_child(this._colorBar);
     this._menuLayout.add_child(this.text);
 
     this.add_child(this._menuLayout);
@@ -68,8 +83,79 @@ export default class Indicator extends PanelMenu.Button {
     this.menu.addMenuItem(settingsItem);
   }
 
-  setText(text) {
+  setText(text, hasEvents = false) {
     this.text.set_text(text);
+    this._hasEvents = hasEvents;
+
+    // Add/remove no-events class based on whether there's text
+    if (text === "" || !hasEvents) {
+      this.text.add_style_class_name("no-events");
+      this.icon.add_style_class_name("no-events");
+    } else {
+      this.text.remove_style_class_name("no-events");
+      this.icon.remove_style_class_name("no-events");
+    }
+
+    this._updateColorBar();
+    this._updateTextStyle();
+  }
+
+  _connectSettings() {
+    if (!this._settings) return;
+
+    // Listen for color bar settings changes
+    this._settings.connect("changed::show-color-bar", () => {
+      this._updateColorBar();
+    });
+
+    this._settings.connect("changed::color-bar-color", () => {
+      this._updateColorBar();
+    });
+
+    // Listen for text styling changes
+    this._settings.connect("changed::font-size", () => {
+      this._updateTextStyle();
+    });
+
+    this._settings.connect("changed::text-color", () => {
+      this._updateTextStyle();
+    });
+  }
+
+  _updateColorBar() {
+    if (!this._colorBar || !this._settings) return;
+
+    const showColorBar = this._settings.get_boolean("show-color-bar");
+    const colorBarColor = this._settings.get_string("color-bar-color");
+
+    // Only show color bar if setting is enabled AND there are events
+    if (showColorBar && this._hasEvents) {
+      this._colorBar.style = `background-color: ${colorBarColor};`;
+      this._colorBar.visible = true;
+    } else {
+      this._colorBar.visible = false;
+    }
+  }
+
+  _updateTextStyle() {
+    if (!this.text || !this._settings) return;
+
+    const fontSize = this._settings.get_int("font-size");
+    const textColor = this._settings.get_string("text-color");
+
+    // Simple and direct approach - build style string
+    let styleString = "";
+
+    if (fontSize > 0) {
+      styleString += `font-size: ${fontSize}pt; `;
+    }
+
+    if (textColor && textColor !== "") {
+      styleString += `color: ${textColor}; `;
+    }
+
+    // Apply style directly
+    this.text.style = styleString;
   }
 
   showNextEventIcon({ showIcon }) {

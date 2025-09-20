@@ -1,4 +1,29 @@
 /* Add your custom extension styling here */
 .system-status-label {
   padding-right: 6px;
+  transition: color 50ms ease, font-size 50ms ease;
+}
+
+/* Reduce padding when no events */
+.system-status-label.no-events {
+  padding-right: 0px;
+}
+
+/* Reduce icon spacing when no events */
+.system-status-icon.no-events {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+/* Color bar separator between icon and text */
+.event-color-bar {
+  width: 3px;
+  height: 100%;
+  min-height: 24px;
+  border-radius: 1.5px;
+  margin: 0 6px;
+  transition: background-color 50ms ease;
+  align-self: stretch;
 }

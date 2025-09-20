@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Bar 1.0\n"
 "Report-Msgid-Bugs-To: gautierlabarre@github.com\n"
-"POT-Creation-Date: 2025-09-19 22:00+0200\n"
-"PO-Revision-Date: 2025-09-19 22:01+0200\n"
+"POT-Creation-Date: 2025-09-20 11:58+0200\n"
+"PO-Revision-Date: 2025-09-20 11:59+0200\n"
 "Last-Translator: Gautier \n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -17,79 +17,127 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: prefs.js:19
+#: prefs.js:20
 msgid "General"
 msgstr "Général"
 
-#: prefs.js:22
+#: prefs.js:23
 msgid "Panel to show indicator in"
 msgstr "Panneau où afficher l'indicateur"
 
-#: prefs.js:24
+#: prefs.js:25
 msgid "Left"
 msgstr "Gauche"
 
-#: prefs.js:24
+#: prefs.js:25
 msgid "Center"
 msgstr "Centre"
 
-#: prefs.js:24
+#: prefs.js:25
 msgid "Right"
 msgstr "Droite"
 
-#: prefs.js:39
+#: prefs.js:40
 msgid "Show event icon before the event"
 msgstr "Afficher l'icône avant l'événement"
 
-#: prefs.js:46
+#: prefs.js:47
 msgid "Display event name"
 msgstr "Afficher le nom de l'événement"
 
-#: prefs.js:48
+#: prefs.js:49
 msgid "If disabled will show \"Meeting\" instead of the event name"
 msgstr "Si désactivé, affichera \"Réunion\" au lieu du nom de l'événement"
 
-#: prefs.js:55
+#: prefs.js:56
 msgid "Length of the event name displayed"
 msgstr "Longueur du nom d'événement affiché"
 
-#: prefs.js:68
+#: prefs.js:69
 msgid "Next events"
 msgstr "Événements suivants"
 
-#: prefs.js:74
+#: prefs.js:75
 msgid "Display event duration"
 msgstr "Afficher la durée de l'événement"
 
-#: prefs.js:75
+#: prefs.js:76
 msgid "Will add/remove the \"for 30 min\" in the event name"
 msgstr "Ajoute/supprime \"pendant 30 min\" dans le nom de l'événement"
 
-#: prefs.js:82
+#: prefs.js:83
 msgid "Display the time before the event"
 msgstr "Afficher le temps avant l'événement"
 
-#: prefs.js:83
+#: prefs.js:84
 msgid "Will add/remove the \"In 1 h\" in the event name"
 msgstr "Ajoute/supprime \"Dans 1 h\" dans le nom de l'événement"
 
-#: prefs.js:90
+#: prefs.js:91
 msgid "Display the time of the event"
 msgstr "Afficher l'heure de l'événement"
 
-#: prefs.js:91
+#: prefs.js:92
 msgid "Will add/remove the \"(15:00)\" in the event name"
 msgstr "Ajoute/supprime \"(15:00)\" dans le nom de l'événement"
 
+#: prefs.js:98
+msgid "Color Bar"
+msgstr "Barre colorée"
+
 #: prefs.js:102
+msgid "Display a colored bar before events"
+msgstr "Afficher une barre colorée avant les événements"
+
+#: prefs.js:106
+msgid "Show Color Bar"
+msgstr "Afficher la barre colorée"
+
+#: prefs.js:110
+msgid "Display a 3px colored bar before the event text"
+msgstr "Afficher une barre colorée de 3px avant le texte de l'événement"
+
+#: prefs.js:114
+msgid "Bar Color"
+msgstr "Couleur de la barre"
+
+#: prefs.js:122
+msgid "Reset to default"
+msgstr "Remettre par défaut"
+
+#: prefs.js:124
+msgid "Text Styling"
+msgstr "Style du texte"
+
+#: prefs.js:128
+msgid "Customize the appearance of event text"
+msgstr "Personnaliser l'apparence du texte des événements"
+
+#: prefs.js:132
+msgid "Font Size"
+msgstr "Taille de la police"
+
+#: prefs.js:136
+msgid "Adjust the font size of event text"
+msgstr "Ajuster la taille de police du texte des événements"
+
+#: prefs.js:140
+msgid "Text Color"
+msgstr "Couleur du texte"
+
+#: prefs.js:144
+msgid "Choose the color of the event text"
+msgstr "Choisir la couleur du texte des événements"
+
+#: prefs.js:152
 msgid "Current events"
 msgstr "Événements actuels"
 
-#: prefs.js:107
+#: prefs.js:157
 msgid "Display the next event during an event"
 msgstr "Afficher l'événement suivant pendant un événement"
 
-#: prefs.js:108
+#: prefs.js:158
 msgid "When in a meeting, show the next event as well"
 msgstr "En réunion, afficher aussi l'événement suivant"
 
@@ -139,3 +187,16 @@ msgstr "%dh"
 #, javascript-format
 msgid "%dm"
 msgstr "%dmin"
+
+# New translations for tabs and styling sections
+msgid "Global"
+msgstr "Global"
+
+msgid "Styling"
+msgstr "Style"
+
+msgid "Icon"
+msgstr "Icône"
+
+msgid "Configure event icon display"
+msgstr "Configurer l'affichage de l'icône d'événement"

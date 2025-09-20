@@ -12,6 +12,13 @@ env MUTTER_DEBUG_DUMMY_MODE_SPECS=1920x1080 \
 dbus-run-session -- gnome-shell --nested --wayland
 ```
 
+or with another language :
+
+```bash
+env LANGUAGE=en_GB.UTF-8 MUTTER_DEBUG_DUMMY_MODE_SPECS=1920x1080 \
+dbus-run-session -- gnome-shell --nested --wayland
+```
+
 To update the schemas with new parameters :
 
 ```bash
