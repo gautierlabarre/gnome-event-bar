@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Bar 1.0\n"
 "Report-Msgid-Bugs-To: gautierlabarre@github.com\n"
-"POT-Creation-Date: 2025-09-20 12:04+0200\n"
+"POT-Creation-Date: 2025-09-20 13:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,135 +17,151 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: prefs.js:20
+#: prefs.js:19
+msgid "Global"
+msgstr ""
+
+#: prefs.js:28
+msgid "Styling"
+msgstr ""
+
+#: prefs.js:37
 msgid "General"
 msgstr ""
 
-#: prefs.js:23
+#: prefs.js:39
 msgid "Panel to show indicator in"
 msgstr ""
 
-#: prefs.js:25
+#: prefs.js:41
 msgid "Left"
 msgstr ""
 
-#: prefs.js:25
+#: prefs.js:41
 msgid "Center"
 msgstr ""
 
-#: prefs.js:25
+#: prefs.js:41
 msgid "Right"
 msgstr ""
 
-#: prefs.js:40
-msgid "Show event icon before the event"
-msgstr ""
-
-#: prefs.js:47
+#: prefs.js:56
 msgid "Display event name"
 msgstr ""
 
-#: prefs.js:49
+#: prefs.js:58
 msgid "If disabled will show \"Meeting\" instead of the event name"
 msgstr ""
 
-#: prefs.js:56
+#: prefs.js:65
 msgid "Length of the event name displayed"
 msgstr ""
 
-#: prefs.js:69
+#: prefs.js:78
 msgid "Next events"
 msgstr ""
 
-#: prefs.js:75
+#: prefs.js:84
 msgid "Display event duration"
 msgstr ""
 
-#: prefs.js:76
+#: prefs.js:85
 msgid "Will add/remove the \"for 30 min\" in the event name"
 msgstr ""
 
-#: prefs.js:83
+#: prefs.js:92
 msgid "Display the time before the event"
 msgstr ""
 
-#: prefs.js:84
+#: prefs.js:93
 msgid "Will add/remove the \"In 1 h\" in the event name"
 msgstr ""
 
-#: prefs.js:91
+#: prefs.js:100
 msgid "Display the time of the event"
 msgstr ""
 
-#: prefs.js:92
+#: prefs.js:101
 msgid "Will add/remove the \"(15:00)\" in the event name"
 msgstr ""
 
-#: prefs.js:103
+#: prefs.js:112
 msgid "Current events"
 msgstr ""
 
-#: prefs.js:108
+#: prefs.js:117
 msgid "Display the next event during an event"
 msgstr ""
 
-#: prefs.js:109
+#: prefs.js:118
 msgid "When in a meeting, show the next event as well"
 msgstr ""
 
-#: prefs.js:118
+#: prefs.js:129
+msgid "Icon"
+msgstr ""
+
+#: prefs.js:130
+msgid "Configure event icon display"
+msgstr ""
+
+#: prefs.js:136
+msgid "Show event icon before the event"
+msgstr ""
+
+#: prefs.js:145
 msgid "Color Bar"
 msgstr ""
 
-#: prefs.js:119
+#: prefs.js:146
 msgid "Display a colored bar before events"
 msgstr ""
 
-#: prefs.js:126
+#: prefs.js:153
 msgid "Show Color Bar"
 msgstr ""
 
-#: prefs.js:127
+#: prefs.js:154
 msgid "Display a 3px colored bar before the event text"
 msgstr ""
 
-#: prefs.js:137
+#: prefs.js:164
 msgid "Bar Color"
 msgstr ""
 
-#: prefs.js:138
+#: prefs.js:165
 msgid "Choose the color of the bar"
 msgstr ""
 
-#: prefs.js:148
+#: prefs.js:175
 msgid "Text Styling"
 msgstr ""
 
-#: prefs.js:149
+#: prefs.js:176
 msgid "Customize the appearance of event text"
 msgstr ""
 
-#: prefs.js:156
+#: prefs.js:183
 msgid "Font Size"
 msgstr ""
 
-#: prefs.js:157
-msgid "Adjust the font size of event text (0 = system default)"
+#: prefs.js:184
+msgid "Adjust the font size of event text"
 msgstr ""
 
-#: prefs.js:167
+#: prefs.js:194
 msgid "Text Color"
 msgstr ""
 
-#: prefs.js:168
+#: prefs.js:195
 msgid "Choose the color of the event text"
 msgstr ""
 
-#: prefs.js:254
+#: prefs.js:278
 msgid "Reset to default"
 msgstr ""
 
-#: prefs.js:311 prefs.js:362
+#: prefs.js:335 prefs.js:386
 msgid "Reset to system default"
 msgstr ""
 
@@ -177,11 +193,11 @@ msgstr ""
 msgid "EventBar Indicator"
 msgstr ""
 
-#: src/indicator.js:60
+#: src/indicator.js:63
 msgid "Loading"
 msgstr ""
 
-#: src/indicator.js:76
+#: src/indicator.js:79
 msgid "Settings"
 msgstr ""
 

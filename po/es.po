@@ -1,0 +1,206 @@
+# Spanish translations for Event Bar package.
+# Copyright (C) 2025 THE Event Bar'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Event Bar package.
+# Generated translations, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Event Bar 1.0\n"
+"Report-Msgid-Bugs-To: gautierlabarre@github.com\n"
+"POT-Creation-Date: 2025-09-20 11:58+0200\n"
+"PO-Revision-Date: 2025-09-20 12:00+0200\n"
+"Last-Translator: Generated\n"
+"Language-Team: Spanish <traduc@traduc.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: prefs.js:20
+msgid "General"
+msgstr "General"
+
+#: prefs.js:23
+msgid "Panel to show indicator in"
+msgstr "Panel donde mostrar el indicador"
+
+#: prefs.js:25
+msgid "Left"
+msgstr "Izquierda"
+
+#: prefs.js:25
+msgid "Center"
+msgstr "Centro"
+
+#: prefs.js:25
+msgid "Right"
+msgstr "Derecha"
+
+#: prefs.js:40
+msgid "Show event icon before the event"
+msgstr "Mostrar icono del evento antes del evento"
+
+#: prefs.js:47
+msgid "Display event name"
+msgstr "Mostrar nombre del evento"
+
+#: prefs.js:49
+msgid "If disabled will show \"Meeting\" instead of the event name"
+msgstr "Si se desactiva, mostrará \"Reunión\" en lugar del nombre del evento"
+
+#: prefs.js:56
+msgid "Length of the event name displayed"
+msgstr "Longitud del nombre del evento mostrado"
+
+#: prefs.js:69
+msgid "Next events"
+msgstr "Próximos eventos"
+
+#: prefs.js:75
+msgid "Display event duration"
+msgstr "Mostrar duración del evento"
+
+#: prefs.js:76
+msgid "Will add/remove the \"for 30 min\" in the event name"
+msgstr "Agregará/eliminará \"por 30 min\" en el nombre del evento"
+
+#: prefs.js:83
+msgid "Display the time before the event"
+msgstr "Mostrar el tiempo antes del evento"
+
+#: prefs.js:84
+msgid "Will add/remove the \"In 1 h\" in the event name"
+msgstr "Agregará/eliminará \"En 1 h\" en el nombre del evento"
+
+#: prefs.js:91
+msgid "Display the time of the event"
+msgstr "Mostrar la hora del evento"
+
+#: prefs.js:92
+msgid "Will add/remove the \"(15:00)\" in the event name"
+msgstr "Agregará/eliminará \"(15:00)\" en el nombre del evento"
+
+#: prefs.js:98
+msgid "Color Bar"
+msgstr "Barra de color"
+
+#: prefs.js:102
+msgid "Display a colored bar before events"
+msgstr "Mostrar una barra de color antes de los eventos"
+
+#: prefs.js:106
+msgid "Show Color Bar"
+msgstr "Mostrar barra de color"
+
+#: prefs.js:110
+msgid "Display a 3px colored bar before the event text"
+msgstr "Mostrar una barra de color de 3px antes del texto del evento"
+
+#: prefs.js:114
+msgid "Bar Color"
+msgstr "Color de la barra"
+
+#: prefs.js:122
+msgid "Reset to default"
+msgstr "Restablecer por defecto"
+
+#: prefs.js:124
+msgid "Text Styling"
+msgstr "Estilo del texto"
+
+#: prefs.js:128
+msgid "Customize the appearance of event text"
+msgstr "Personalizar la apariencia del texto del evento"
+
+#: prefs.js:132
+msgid "Font Size"
+msgstr "Tamaño de fuente"
+
+#: prefs.js:136
+msgid "Adjust the font size of event text"
+msgstr "Ajustar el tamaño de fuente del texto del evento"
+
+#: prefs.js:140
+msgid "Text Color"
+msgstr "Color del texto"
+
+#: prefs.js:144
+msgid "Choose the color of the event text"
+msgstr "Elegir el color del texto del evento"
+
+#: prefs.js:152
+msgid "Current events"
+msgstr "Eventos actuales"
+
+#: prefs.js:157
+msgid "Display the next event during an event"
+msgstr "Mostrar el próximo evento durante un evento"
+
+#: prefs.js:158
+msgid "When in a meeting, show the next event as well"
+msgstr "Cuando esté en una reunión, mostrar también el próximo evento"
+
+#: src/events.js:116 src/events.js:145 src/events.js:160
+msgid "Meeting"
+msgstr "Reunión"
+
+#: src/events.js:120
+msgid "In %s "
+msgstr "En %s "
+
+#: src/events.js:122
+msgid "for %s "
+msgstr "por %s "
+
+#: src/events.js:146
+msgid "Ends in %s. Next: %s at %s"
+msgstr "Termina en %s. Siguiente: %s a las %s"
+
+#: src/events.js:161
+msgid "Ends in %s: %s"
+msgstr "Termina en %s: %s"
+
+#: src/indicator.js:17
+msgid "EventBar Indicator"
+msgstr "Indicador EventBar"
+
+#: src/indicator.js:49
+msgid "Loading"
+msgstr "Cargando"
+
+#: src/indicator.js:64
+msgid "Settings"
+msgstr "Configuración"
+
+#: src/utils.js:63 src/utils.js:86
+#, javascript-format
+msgid "%dh %dm"
+msgstr "%dh %dmin"
+
+#: src/utils.js:64 src/utils.js:87
+#, javascript-format
+msgid "%dh"
+msgstr "%dh"
+
+#: src/utils.js:66 src/utils.js:89
+#, javascript-format
+msgid "%dm"
+msgstr "%dmin"
+
+# New translations for tabs and styling sections
+#: prefs.js:18
+msgid "Global"
+msgstr "Global"
+
+#: prefs.js:24
+msgid "Styling"
+msgstr "Estilo"
+
+#: prefs.js:137
+msgid "Icon"
+msgstr "Icono"
+
+#: prefs.js:138
+msgid "Configure event icon display"
+msgstr "Configurar visualización del icono del evento"
