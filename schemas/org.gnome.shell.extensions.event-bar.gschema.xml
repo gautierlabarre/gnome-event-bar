@@ -32,9 +32,9 @@
       <description>Display a 3px colored bar before the event text</description>
     </key>
     <key name="color-bar-color" type="s">
-      <default>'#5f6368'</default>
+      <default>'auto'</default>
       <summary>Color of the event bar</summary>
-      <description>Color used for the colored bar before events</description>
+      <description>Color used for the colored bar before events (use 'auto' for GNOME accent color)</description>
     </key>
     <key name="font-size" type="i">
       <default>0</default>

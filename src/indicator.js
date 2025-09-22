@@ -1,5 +1,6 @@
 import St from "gi://St";
 import Clutter from "gi://Clutter";
+import Gio from "gi://Gio";
 import * as Calendar from "resource:///org/gnome/shell/ui/calendar.js";
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import * as PanelMenu from "resource:///org/gnome/shell/ui/panelMenu.js";
@@ -12,6 +13,45 @@ export default class Indicator extends PanelMenu.Button {
     super();
     this._openPrefsCallback = props.openPrefsCallback;
     this._settings = props.settings;
+  }
+
+  /**
+   * Get GNOME's accent color if available, otherwise return the default gray
+   * @returns {string} Color in hex format
+   */
+  _getDefaultBarColor() {
+    try {
+      const interfaceSettings = new Gio.Settings({
+        schema: "org.gnome.desktop.interface",
+      });
+
+      const accentColor = interfaceSettings.get_string("accent-color");
+
+      // Map GNOME accent color names to hex values
+      // These are the standard GNOME accent colors
+      const accentColorMap = {
+        blue: "#3584e4",
+        teal: "#2190a4",
+        green: "#57e389",
+        yellow: "#f8e45c",
+        orange: "#ff7800",
+        red: "#ed333b",
+        pink: "#e66ba0",
+        purple: "#9141ac",
+        slate: "#6f8396",
+      };
+
+      if (accentColor && accentColorMap[accentColor]) {
+        return accentColorMap[accentColor];
+      }
+    } catch (e) {
+      console.log(
+        "Event Bar: Could not retrieve GNOME accent color, using default"
+      );
+    }
+
+    // Fallback to default gray
+    return "#5f6368";
   }
 
   _init() {
@@ -126,7 +166,12 @@ export default class Indicator extends PanelMenu.Button {
     if (!this._colorBar || !this._settings) return;
 
     const showColorBar = this._settings.get_boolean("show-color-bar");
-    const colorBarColor = this._settings.get_string("color-bar-color");
+    let colorBarColor = this._settings.get_string("color-bar-color");
+
+    // If the color is 'auto', use GNOME's accent color
+    if (colorBarColor === "auto" || !colorBarColor || colorBarColor === "") {
+      colorBarColor = this._getDefaultBarColor();
+    }
 
     // Only show color bar if setting is enabled AND there are events
     if (showColorBar && this._hasEvents) {
