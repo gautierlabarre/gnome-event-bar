@@ -11,6 +11,47 @@ import {
 } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
 export default class NextUpExtensionPreferences extends ExtensionPreferences {
+  /**
+   * Get GNOME's accent color if available, otherwise return the default gray
+   * @returns {string} Color in hex format
+   */
+  _getGnomeAccentColor() {
+    try {
+      const interfaceSettings = new Gio.Settings({
+        schema: "org.gnome.desktop.interface",
+      });
+
+      const accentColor = interfaceSettings.get_string("accent-color");
+      console.log("pref");
+      console.log("accent Color:", accentColor);
+
+      // Map GNOME accent color names to hex values
+      const accentColorMap = {
+        blue: "#3584e4",
+        teal: "#2190a4",
+        green: "#57e389",
+        yellow: "#f8e45c",
+        orange: "#ff7800",
+        red: "#ed333b",
+        pink: "#e66ba0",
+        purple: "#9141ac",
+        slate: "#6f8396",
+      };
+
+      if (accentColor && accentColorMap[accentColor]) {
+        console.log(accentColorMap[accentColor]);
+        return accentColorMap[accentColor];
+      }
+    } catch (e) {
+      console.log(
+        "Event Bar: Could not retrieve GNOME accent color in prefs, using default"
+      );
+    }
+
+    // Fallback to default gray
+    return "#5f6368";
+  }
+
   fillPreferencesWindow(window) {
     const settings = this.getSettings();
 
@@ -262,7 +303,15 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
     // Set initial color
     const currentColor = settings.get_string(variable);
     const rgba = new Gdk.RGBA();
-    rgba.parse(currentColor);
+
+    // If the setting is 'auto', show the actual accent color in the button
+    if (currentColor === "auto") {
+      const accentColor = this._getGnomeAccentColor();
+      rgba.parse(accentColor);
+    } else {
+      rgba.parse(currentColor || "#5f6368"); // Fallback to gray if empty
+    }
+
     colorButton.set_rgba(rgba);
 
     // Connect color change
@@ -280,10 +329,12 @@ export default class NextUpExtensionPreferences extends ExtensionPreferences {
     });
 
     resetButton.connect("clicked", () => {
-      const defaultColor = "#5f6368"; // Default gray color
+      const defaultColor = "auto";
       settings.set_string(variable, defaultColor);
+      // Show the actual accent color in the color button
+      const accentColor = this._getGnomeAccentColor();
       const rgba = new Gdk.RGBA();
-      rgba.parse(defaultColor);
+      rgba.parse(accentColor);
       colorButton.set_rgba(rgba);
     });
 
